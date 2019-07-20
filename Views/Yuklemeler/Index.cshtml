@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="contact-page-aside"style="min-height:1000px">
+                <div class="left-aside" id="dersListesi" >
+
+                </div>
+                <div class="right-aside" id="odevListesi">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+
+
+<script>
+    function YuklemeleriGetir(id) {
+        $("#odevListesi").load("/Yuklemeler/YuklemeleriGetir?id="+id);
+    }
+    $(document).ready(function () {
+        $("#dersListesi").load("/Yuklemeler/DersleriveOdevleriGetir/");
+
+    });
+    @*notGir(this, 'delete_clicked', '@yukleme.ID')*@
+    @*notGir(this,'edit_clicked','@yukleme.ID','#notBilgisi_@yukleme.ID')*@
+    function notGir(btn, e, commentid, spanid) {
+        var button = $(btn);
+       
+        
+        var mode = button.data("edit-mode");
+        var btnicon;
+        var txt;
+        if (e === "edit_clicked") {
+            if (!mode) {
+                button.data("edit-mode", true);
+                button.removeClass("btn-warning");
+
+                button.addClass("btn-success");
+                btnicon = button.find("i");
+                btnicon.removeClass("fa-edit");
+                btnicon.addClass("fa-check");
+                $(spanid).addClass("editable");
+                $(spanid).attr("contenteditable", true);
+                $(spanid).focus();
+
+            }
+            else { //edit modu kapattığında
+                button.data("edit-mode", false);
+                button.removeClass("btn-success");
+                button.addClass("btn-warning");
+                btnicon = button.find("i");
+                btnicon.removeClass("fa-check");
+                btnicon.addClass("fa-edit");
+                $(spanid).removeClass("editable");
+                $(spanid).attr("contenteditable", false);
+                txt = $(spanid).text();
+               $.ajax({
+                    method: "POST",
+                   url: "/Yuklemeler/NotGiris/",
+                   data: {
+                       'yuklemeid': commentid, 'puan': txt
+                   }
+                }).done(function (data) {
+                    if (data.result) {
+
+                        $.toast({
+                            heading: 'Welcome to Monster admin',
+                            text: "Not Girişi Başarılı Bir Şekilde Yapıldı",
+                            position: 'top-right',
+                            loaderBg: '#ff6849',
+                            icon: 'success',
+                            hideAfter: 3500,
+                            stack: 6
+                        });
+                        
+
+
+                    }
+                    else {
+                        alert("Yorum güncellenemedi");
+                        commtCount.text(data.comCount);
+                    }
+                }).fail(function () {
+                    alert("Sunucu ile bağlantı sağlanamadı");
+                });
+            }
+
+
+        }
+        
+        
+    }
+</script>
+

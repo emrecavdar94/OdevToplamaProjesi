@@ -1,0 +1,117 @@
+﻿
+        
+        
+            <h4 class="m-b-20">Ders Ekle</h4>
+            <!-- Contact -->
+            <form>
+                <h5>Ders Adı <span class="text-danger">*</span></h5>
+                <div class="form-group">
+                    <input type="text" class="form-control"  id="txtDersAdi" placeholder="Ders Adı">
+                </div>
+                <div class="form-group">
+                    <h5>Ders Kodu <span class="text-danger">*</span></h5>
+                    <div class="controls">
+                        <div class="input-group">
+                            <input type="text" id="txtDersKodu" class="form-control" placeholder="Ders Kodu" required="" aria-invalid="false"> <span class="input-group-btn">
+                                <button class="btn btn-info" id="btnDersKoduOlustur" type="button">Ders Kodu Oluştur</button>
+                            </span>
+                        </div>
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+
+                <button type="button" id="btnDersEkle" class="btn btn-info">Ders Ekle</button>
+            </form>
+       
+        
+
+<script>
+    $("#btnDersKoduOlustur").click(function () {
+
+   
+        $.ajax({
+            method: "GET",
+            url: "/Ders/RandomString/",
+
+           
+            ContentType: "application/json; charset=utf-8",
+            dataType: "json"
+        }).done(function (jsnData) {
+            if (jsnData.result!=null) {
+
+
+                $("#txtDersKodu").val(jsnData.result);
+
+            }
+            else {
+                $.toast({
+                    heading: 'Welcome to Monster admin',
+                    text: "Ders Kodu Üretilemedi.",
+                    position: 'top-right',
+                    loaderBg: '#ff6849',
+                    icon: 'error',
+                    hideAfter: 3500
+
+                });
+
+            }
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+
+
+    });
+    $("#btnDersEkle").click(function () {
+        var dersAdi = $("#txtDersAdi").val();
+        var dersKodu = $("#txtDersKodu").val();
+        if (dersAdi != null && dersKodu!=null) {
+
+        
+            $.ajax({
+                method: "POST",
+                url: "/Ders/DersEkle/",
+                data: { 'dersAdi': dersAdi, 'dersKodu': dersKodu },
+                
+                ContentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).done(function (jsnData) {
+                if (jsnData.result) {
+                    
+
+                    $.toast({
+                        heading: 'Welcome to Monster admin',
+                        text: "Ders Oluşturuldu",
+                        position: 'top-right',
+                        loaderBg: '#ff6849',
+                        icon: 'success',
+                        hideAfter: 3500,
+                        stack: 6
+                    });
+                    dersListesiYukle();
+                }
+                else {
+                    $.toast({
+                        heading: 'Welcome to Monster admin',
+                        text: jsnData.message,
+                        position: 'top-right',
+                        loaderBg: '#ff6849',
+                        icon: 'error',
+                        hideAfter: 3500
+
+                    });
+
+                }
+            }).fail(function (error) {
+                $.toast({
+                    heading: 'Welcome to Monster admin',
+                    text: 'Sunucuyla Bağlantı Kurulamadı.',
+                    position: 'top-right',
+                    loaderBg: '#ff6849',
+                    icon: 'error',
+                    hideAfter: 3500
+
+                });
+            })
+        }
+    });
+</script>

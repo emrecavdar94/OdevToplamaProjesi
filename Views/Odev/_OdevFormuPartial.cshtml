@@ -1,0 +1,153 @@
+﻿
+    <h4 class="m-b-20">Ödev Ekle</h4>
+   
+    <form>
+        <h5>Ders Adı <span class="text-danger">*</span></h5>
+        <div class="form-group">
+            <select class="custom-select col-12" id="dersListesi">
+                <option selected="">Ders Seçiniz...</option>
+                
+            </select>
+        </div>
+        <h5>Ödev Başlığı <span class="text-danger">*</span></h5>
+        <div class="form-group">
+            <input type="text" class="form-control" id="txtOdevBasligi" placeholder="Ödev Açıklaması">
+        </div>
+        <div class="form-group">
+            <h5>Ödev Açıklaması </h5>
+            <textarea class="form-control" rows="2" id="txtOdevAciklamasi"></textarea>
+        </div>
+        
+            <div class="form-group row p-t-20">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <h5>Ödev Başlangıç Tarihi</h5>
+                        <div class="col-10">
+                            <input class="form-control" type="date" value="2011-08-19" id="txtBitisTarihi">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <h5>Ödev Bitiş Tarihi</h5>
+                        <div class="col-10">
+                            <input class="form-control" type="date" value="2011-08-19" id="txtBaslangicTarihi">
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+        <button type="button" id="btnOdevOlustur" class="btn btn-info">Ödev Oluştur</button>
+    </form>
+
+<script>
+    function dersListesiYukle() {
+        var dersListesi = $("#dersListesi");
+        dersListesi.empty();
+        $.ajax({
+            method: "GET",
+            url: "/Ders/DersListesiGetir/"
+
+        }).done(function (jsnData) {
+            if (jsnData.result) {
+
+                
+                
+                $(jsnData.veri).each(function () {
+                    var option = $("<option />");
+
+                    //Set Customer Name in Text part.
+                    option.html(this.DersAdi);
+
+                    //Set Customer CustomerId in Value part.
+                    option.val(this.ID);
+
+                    //Add the Option element to DropDownList.
+                    dersListesi.append(option);
+
+                });
+            }
+            else {
+                $.toast({
+                    heading: 'Welcome to Monster admin',
+                    text: "else",
+                    position: 'top-right',
+                    loaderBg: '#ff6849',
+                    icon: 'error',
+                    hideAfter: 3500
+
+                });
+
+            }
+        }).fail(function (error) {
+            $.toast({
+                heading: 'Welcome to Monster admin',
+                text: 'Sunucuyla Bağlantı Kurulamadı.',
+                position: 'top-right',
+                loaderBg: '#ff6849',
+                icon: 'error',
+                hideAfter: 3500
+
+            });
+        })
+    };
+    $(document).ready(function () {
+        dersListesiYukle();
+    });
+    $("#btnOdevOlustur").click(function () {
+        var dersID = $("#dersListesi").children("option:selected").val();
+        var odevBaslik = $("#txtOdevBasligi").val();
+        var odevAciklamasi = $.trim($("#txtOdevAciklamasi").val())
+        var baslangicTarihi = $("#txtBaslangicTarihi").val();
+        var bitisTarihi = $("#txtBitisTarihi").val();
+        if (dersID != null && odevBaslik != null && baslangicTarihi != null && bitisTarihi != null) {
+
+
+            $.ajax({
+                method: "POST",
+                url: "/Odev/OdevEkle/",
+                data: { 'dersID': dersID, 'odevBasligi': odevBaslik, 'odevAciklamasi': odevAciklamasi, 'baslangicTarihi': baslangicTarihi,'bitisTarihi':bitisTarihi },
+
+                ContentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).done(function (jsnData) {
+                if (jsnData.result) {
+               
+
+                    $.toast({
+                        heading: 'Welcome to Monster admin',
+                        text: "Ödev Oluşturuldu",
+                        position: 'top-right',
+                        loaderBg: '#ff6849',
+                        icon: 'success',
+                        hideAfter: 3500,
+                        stack: 6
+                    });
+
+                }
+                else {
+                    $.toast({
+                        heading: 'Welcome to Monster admin',
+                        text: jsnData.message,
+                        position: 'top-right',
+                        loaderBg: '#ff6849',
+                        icon: 'error',
+                        hideAfter: 3500
+
+                    });
+
+                }
+            }).fail(function (error) {
+                $.toast({
+                    heading: 'Welcome to Monster admin',
+                    text: 'Sunucuyla Bağlantı Kurulamadı.',
+                    position: 'top-right',
+                    loaderBg: '#ff6849',
+                    icon: 'error',
+                    hideAfter: 3500
+
+                });
+            })
+        }
+    });
+</script>

@@ -1,0 +1,71 @@
+﻿
+<h4 class="m-b-20">Ders Kayıt</h4>
+
+<form>
+
+
+    <h5>Ders Kodu <span class="text-danger">*</span></h5>
+    <div class="form-group">
+        <input type="text" class="form-control" id="txtDersKodu" placeholder="Ders Kodu">
+    </div>
+
+
+
+
+    <button type="button" id="btnDersKayit" class="btn btn-info">Derse Kayıt Ol</button>
+</form>
+<script>
+    $("#btnDersKayit").click(function () {
+        var dersKodu = $("#txtDersKodu").val();
+        if (dersKodu!=null) {
+
+        
+       
+            $.ajax({
+                method: "POST",
+                url: "/Ders/DersKayitOl/",
+                data: { 'dersKodu': dersKodu },
+
+                ContentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).done(function (jsnData) {
+                if (jsnData.result) {
+
+
+                    $.toast({
+                        heading: 'Welcome to Monster admin',
+                        text: "Ders'e Kayıt Olundu ",
+                        position: 'top-right',
+                        loaderBg: '#ff6849',
+                        icon: 'success',
+                        hideAfter: 3500,
+                        stack: 6
+                    });
+
+                }
+                else {
+                    $.toast({
+                        heading: 'Welcome to Monster admin',
+                        text: jsnData.message,
+                        position: 'top-right',
+                        loaderBg: '#ff6849',
+                        icon: 'error',
+                        hideAfter: 3500
+
+                    });
+
+                }
+            }).fail(function (error) {
+                $.toast({
+                    heading: 'Welcome to Monster admin',
+                    text: 'Sunucuyla Bağlantı Kurulamadı.',
+                    position: 'top-right',
+                    loaderBg: '#ff6849',
+                    icon: 'error',
+                    hideAfter: 3500
+
+                });
+                });
+        }
+    });
+</script>

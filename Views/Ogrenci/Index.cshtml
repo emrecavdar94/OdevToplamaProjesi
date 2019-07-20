@@ -1,0 +1,133 @@
+﻿@using OdevToplamaProjesi.Entities
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_OgrenciLayout.cshtml";
+}
+@model List<OgrenciDersIliskiTablosu>
+@{ 
+    int yuklemeSayisi=0;
+    int kayitliDersSayisi=0;
+
+    int yuklenmeyenOdevSayisi = 0;
+    foreach (var item in Model)
+    {
+        kayitliDersSayisi = item.Dersler.Odevlers.Count + kayitliDersSayisi;
+        foreach (var item2 in item.Dersler.Odevlers)
+        {
+            yuklemeSayisi = item2.Yuklemelers.Count + yuklemeSayisi;
+        }
+
+    }
+    yuklenmeyenOdevSayisi = kayitliDersSayisi - yuklemeSayisi;
+}
+<div class="col-lg-6 col-md-6">
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Yüklenen Ödev</h4>
+            <div class="text-right">
+                <h2 class="font-light m-b-0"><i class="ti-arrow-up text-success"></i> @yuklemeSayisi</h2>
+                <span class="text-muted">Yüklenen Ödev Sayısı</span>
+            </div>
+          
+        </div>
+    </div>
+</div>
+<div class="col-lg-6 col-md-6">
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Yükleme Yapılmamış Ödev</h4>
+            <div class="text-right">
+                <h2 class="font-light m-b-0"><i class="ti-arrow-up text-success"></i> @yuklenmeyenOdevSayisi</h2>
+                <span class="text-muted">Henüz Yükleme Yapılmamış Ödev Sayısı</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 col-md-12">
+    <div class="card">
+        <div class="card-block">
+
+            <h4 class="card-title">Yüklemelerim</h4>
+            <div class="table-responsive m-t-40">
+                <table class="table stylish-table">
+                    <thead>
+                        <tr>
+
+                            <th>Öğretmen</th>
+                            <th>Ders Adı</th>
+                            <th>Ödev Adı</th>
+                            <th>Son Teslim Tarihi</th>
+                            <th>Yükleme Durumu</th>
+                            <th>Not</th>
+
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            foreach (var item2 in item.Dersler.Odevlers)
+                            {
+                                if (item2.BitisTarihi>=DateTime.Now)
+                                {
+
+                                
+                                <tr>
+                                    <td>@item2.Dersler.Ogretmenler.OgretmenAdi</td>
+                                    <td>@item2.Dersler.DersAdi</td>
+                                    <td>@item2.OdevBasligi</td>
+                                    <td>@item2.BitisTarihi.ToString("dd/M/yyyy")</td>
+                                    @if (item2.Yuklemelers.Count > 0)
+                                    {
+                                        foreach (var item3 in item2.Yuklemelers)
+                                        {
+                                            if (item2.ID == item3.OdevID)
+                                            {
+                                                if (item3.YuklenenVeri != null)
+                                                {
+                                                    <td>Yükleme Yapıldı</td>
+
+                                                }
+                                                if (item3.YuklenenVeri == null)
+                                                {
+                                                    <td>Yükleme Yapılmadı</td>
+                                                }
+                                                if (item3.OdevNotu != null)
+                                                {
+                                                    <td>@item3.OdevNotu</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>Not Bilgisi Bulunamadı</td>
+                                                }
+                                                if (item3.YuklenenVeri!=null)
+                                                {
+                                                    <td><button type="button" onclick="location.href='/Yuklemeler/YuklemeGuncelle?id='+@item2.ID" class="btn btn-xs btn-warning">Güncelle</button></td>
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td> Yükleme Yapılmadı </td>
+                                        <td>Not Bilgisi Bulunamadı</td>
+                                        <td><button type="button" onclick="location.href='/Odev/OdevYukleme?id='+@item2.ID" class="btn btn-xs btn-info">Yükleme Yap</button></td>
+                                    }
+
+
+                                </tr>
+                                }
+                            }
+
+
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

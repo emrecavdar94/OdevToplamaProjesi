@@ -1,0 +1,182 @@
+﻿@using OdevToplamaProjesi.Entities
+@using OdevToplamaProjesi.BusinessLayer.Managers
+@{
+    ViewBag.Title = "Index";
+}
+@model Ogretmenler
+@{
+    OdevManager odevManager = new OdevManager();
+    ICollection<Dersler> dersListesi = Model.Derslers;
+    int odevSayisi;
+
+    if (dersListesi == null)
+    {
+        odevSayisi = 0;
+    }
+    else
+    {
+        odevSayisi = odevManager.List(x => x.Dersler.OgretmenID == Model.ID).Count;
+    }
+}
+<link href="~/Content/customcss.css" rel="stylesheet" />
+<div class="col-lg-6 col-md-6">
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Ders Sayısı</h4>
+            <div class="text-right">
+                <h2 class="font-light m-b-0"><i class="ti-arrow-up text-purple"></i> @Model.Derslers.Count</h2>
+                <span class="text-muted">Verilen Ders Sayısı</span>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<div class="col-lg-6 col-md-6">
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Ödev Sayısı</h4>
+            <div class="text-right">
+                <h2 class="font-light m-b-0"><i class="ti-arrow-up text-purple"></i> @odevSayisi</h2>
+                <span class="text-muted">Verilen Ödev Sayısı</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="col-md-12 col-lg-12">
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Derslerim ve Yüklemelerim</h4>
+            <h6 class="card-subtitle">Dersleriniz ve Derslere Ait Ödevler Listelenmektedir.</h6>
+
+
+            <table class="table table-bordered">
+                @foreach (var ders in Model.Derslers)
+                {
+                    <tr class="header">
+                        <td colspan="2">  @(ders.DersAdi) (@ders.DersKodu) <span class="pull-right"> <button type="button" id="btnDersKaldir" data-ders-id="@ders.ID" alt="alert" class="btn btn-info dersbirak" onclick="alertCagir(this)">Dersi Bırak</button></span></td>
+
+                    </tr>
+                    foreach (var odev in ders.Odevlers)
+                    {
+                        <tr>
+                            <td>@odev.OdevBasligi</td>
+                            <td>
+                                <div class="btn-group pull-right" role="group" aria-label="Basic example">
+                                    <button id="btnOdevDuzenle" type="button" class="btn btn-secondary" data-odev-id="@odev.ID" data-toggle="modal" data-target="#odevDuzenle"> Düzenle</button>
+                                    <button id="btnOdevSil" type="button" onclick="odevSil(this)" class="btn btn-secondary" data-odev-id="@odev.ID">Sil</button>
+
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+
+                }
+
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+@Bootstrap.ModalPopup("odevDuzenle", "Ödev Düzenle", true)
+@section ogretmenjv{
+
+    <script>
+        $(function () {
+            $('#odevDuzenle').on('show.bs.modal', function (e) {
+
+                var btn = $(e.relatedTarget);
+                odevID = btn.data('odev-id');
+                $("#odevDuzenle_body").load("/Odev/OdevDuzenle?odevID=" + odevID);
+
+
+            });
+        });
+    </script>
+    <script>
+        function alertCagir(btn) {
+            var button = $(btn);
+
+            swal({
+                title: "Eminmisiniz?",
+                text: "Ders Bırakılacak!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Evet, sil!",
+                closeOnConfirm: false
+            }, function () {
+                $.ajax({
+                    method: "GET",
+                    url: "/Ders/DersKaldirOgretmen/" + button.data("ders-id")
+
+                }).done(function (jsnData) {
+                    if (jsnData.result) {
+                        swal({
+                            title: "Başarılı!", text: "Ders başarılı bir şekilde kaldırıldı.", type: "success",
+                            closeOnConfirm: false
+                        }, function () {
+                            location.reload();
+                        });
+
+                    }
+                    else {
+                        swal("Hata!", jsn.message, "warning");
+
+                    }
+                }).fail(function (error) {
+                    swal("Hata!", "Sunucuyla bağlantı kurulamadı.", "warning");
+
+
+                });
+                swal("Başarılı!", "Ders başarılı bir şekilde kaldırıldı.", "success");
+
+            });
+        }
+        function odevSil(btn) {
+
+            var odevID = $(btn).data("odev-id");
+
+            swal({
+                title: "Eminmisiniz?",
+                text: "Ödev Silinecek!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Evet, Sil!",
+                closeOnConfirm: false
+            }, function () {
+                $.ajax({
+                    method: "GET",
+                    url: "/Odev/OdevKaldir/" + odevID,
+
+
+                }).done(function (jsnData) {
+                    if (jsnData.result) {
+                        swal({
+                            title: "Başarılı!", text: "Ödev başarılı bir şekilde güncellendi. :)", type: "success",
+                            closeOnConfirm: false
+                        }, function () {
+                            location.reload();
+                        });
+
+                    }
+                    else {
+                        swal("Hata!", jsn.message, "warning");
+
+                    }
+                }).fail(function (error) {
+                    swal("Hata!", "Sunucuyla bağlantı kurulamadı.", "warning");
+
+
+                });
+                swal("Başarılı!", "Ders başarılı bir şekilde kaldırıldı.", "success");
+
+            });
+        }
+    </script>
+}

@@ -1,0 +1,30 @@
+﻿@using OdevToplamaProjesi.Entities;
+@model Ogretmenler
+<table class="table table-bordered">
+    @foreach (var ders in Model.Derslers)
+    {
+        <tr class="header">
+            <td colspan="2">  @(ders.DersAdi) (@ders.DersKodu) <span class="pull-right"> <button type="button" id="btnDersKaldir" data-ders-id="@ders.ID" alt="alert" class="btn btn-info dersbirak" onclick="alertCagir(this)">Dersi Bırak</button></span></td>
+
+        </tr>
+        foreach (var odev in ders.Odevlers)
+        {
+            <tr>
+                <td>@odev.OdevBasligi</td>
+                <td>
+                    <div class="btn-group pull-right" role="group" aria-label="Basic example">
+                        <button id="btnOdevDuzenle" type="button" class="btn btn-secondary" data-odev-id="@odev.ID" alt="alert"> Düzenle</button>
+                        <button id="btnOdevSil" type="button" class="btn btn-secondary" data-odev-id="@odev.ID">Sil</button>
+
+                    </div>
+                </td>
+            </tr>
+        }
+
+
+    }
+
+
+</table>
+
+

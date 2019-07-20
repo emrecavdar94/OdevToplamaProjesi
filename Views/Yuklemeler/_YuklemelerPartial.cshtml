@@ -1,0 +1,54 @@
+﻿@using OdevToplamaProjesi.Entities
+@model List<Yuklemeler>
+<div class="right-page-header">
+    <div class="d-flex">
+        <div class="align-self-center">
+            <h4 class="card-title m-t-10">Öğrenci Yüklemeleri </h4>
+        </div>
+        
+    </div>
+</div>
+<div class="table-responsive">
+    <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list" data-page-size="10" width="500">
+        <thead>
+            <tr>
+                <th>Öğrenci No</th>
+                <th>Öğrenci</th>
+               
+                <th>Yükleme</th>
+                <th>Puan</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var yukleme in Model)
+            {
+            <tr>
+                <td>@yukleme.Ogrenciler.OgrenciNumarasi</td>
+                <td>
+                    <img src="~/Content/Resimler/Ogrenci/@yukleme.Ogrenciler.OgrenciFotografi" alt="user" class="img-circle" /> @(yukleme.Ogrenciler.OgrenciAdi + " " + yukleme.Ogrenciler.OgrenciSoyadi)
+                </td>
+              
+                <td>@Html.ActionLink("İndir","YuklemeIndir/","Yuklemeler", new { id = yukleme.ID },null)</td>
+
+                <td>
+                    <span id="notBilgisi_@yukleme.ID">
+                      @yukleme.OdevNotu
+
+                    </span>
+
+                    <span class="pull-right">
+                       
+                        <button type="button" class="btn btn-warning btn-xs" data-edit-mode="false" onclick="notGir(this,'edit_clicked','@yukleme.ID','#notBilgisi_@yukleme.ID');">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </span>
+                </td>
+                </tr> 
+            }
+            
+           
+        </tbody>
+       
+    </table>
+</div>

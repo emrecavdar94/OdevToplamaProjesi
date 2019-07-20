@@ -1,0 +1,22 @@
+﻿
+@using OdevToplamaProjesi.Entities
+@model List<Dersler>
+
+<ul class="list-style-none">
+    @foreach (var ders in Model)
+    {
+        <li class="box-label"><a href="javascript:void(0)">@ders.DersAdi <span>@ders.Odevlers.Count</span></a></li>
+        <li class="divider"></li>
+        foreach (var odev in ders.Odevlers)
+        {
+            <li onclick='YuklemeleriGetir(@odev.ID);'><a href="javascript:void(0)" onclick="YuklemeleriGetir(@odev.ID);">@odev.OdevBasligi <span>@odev.Yuklemelers.Count</span></a></li>
+            
+        }
+
+    }
+
+
+
+    
+
+</ul>

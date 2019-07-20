@@ -1,0 +1,47 @@
+﻿@using OdevToplamaProjesi.Entities
+
+@model List<Odevler>
+<div class="col-12">
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Kayıtlı Olunan Dersler</h4>
+            <h6 class="card-subtitle">Ödev Yüklemek İçin Seçiniz.</h6>
+            <div class="table-responsive">
+                <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list" data-page-size="10">
+                    <thead>
+                        <tr>
+                            <th>Ödev</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Count > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                if (item.BitisTarihi >= DateTime.Now)
+                                {
+
+
+                                    <tr>
+                                        <td><a href="/Odev/OdevYukleme?id=@item.ID">@item.OdevBasligi</a></td>
+
+                                    </tr>
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>Derse Ait Ödev Bulunmamaktadır!</td>
+
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

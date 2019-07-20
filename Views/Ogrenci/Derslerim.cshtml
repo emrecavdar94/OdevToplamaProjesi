@@ -1,0 +1,59 @@
+﻿@using OdevToplamaProjesi.Entities
+@{
+    ViewBag.Title = "Derslerim";
+    Layout = "~/Views/Shared/_OgrenciLayout.cshtml";
+}
+@model List<OgrenciDersIliskiTablosu>
+<div class="col-12">
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Kayıtlı Olunan Dersler</h4>
+            <h6 class="card-subtitle">Ödev Yüklemek İçin Seçiniz.</h6>
+            <div class="table-responsive">
+                <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list" data-page-size="10">
+                    <thead>
+                        <tr>
+                            <th>Ders Kodu</th>
+                            <th>Ders Adı</th>
+                            <th>Öğretmen</th>
+                            <th>Ödevler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Dersler.DersKodu</td>
+                                <td>
+                                    @item.Dersler.DersAdi
+                                </td>
+                                <td>@(item.Dersler.Ogretmenler.OgretmenAdi + " " + item.Dersler.Ogretmenler.OgretmenSoyadi)</td>
+
+                                <td>
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#odevBilgisi" data-ders-id="@item.DersID">Ödevler</button>
+                                </td>
+                            </tr>
+                        }
+
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@Bootstrap.ModalPopup("odevBilgisi", "Derse Ait Ödevler(Gitmek için seçiniz)", true)
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<script>
+    $(function () {
+        $('#odevBilgisi').on('show.bs.modal', function (e) {
+
+            var btn = $(e.relatedTarget);
+            dersID = btn.data('ders-id');
+            $("#odevBilgisi_body").load("/Odev/DerseAitOdevGetir?dersID=" + dersID);
+
+
+        });
+    });
+</script>

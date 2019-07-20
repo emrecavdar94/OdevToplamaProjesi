@@ -1,0 +1,29 @@
+Bonus Ders
+Bölüm 25, Ders 360
+Herkese Merhaba,
+
+Kursu tamamladiginiz için tebrik ederim. Bundan sonra devam etmek istediginiz baska bir kurs varsa ögrencilere özel indirimle almaniz mümkündür:
+
+Android Mobil Uygulama Kursu: Seviye 2
+
+Android Mobil Uygulama ve Java bilgilerinizi bir adim daha ileriye mi tasimak istiyorsunuz? O halde bu kurs tam size göre. Chat Uygulamasi, Fitness Uygulamasi, Kim Ariyor Uygulamasi gibi örneklerle birlikte Broadcast Receivers, Servisler, Içerik Saglayicilari ve daha çok fazlasini ögrenin! Buradan indirimli kayit olabilirsiniz: https://www.udemy.com/android-mobil-uygulama-kursu-seviye-2/?couponCode=LATEST
+
+iOS Mobil Uygulama Kursu: Swift 4
+
+iPhone ve iPad'lerde uygulama yazmayi ögrenmek, Swift 4'te uzmanlasmak için ilk Türkçe kursum olan bu egitimi kaçirmak istemezsiniz. Içindeki Angry Birds, Instagram Klon, Foursquare Klon gibi yaratici uygulamalariyla size bir mobil gelistirici yapmak yolunda sifirdan alip en ince detaylarina kadar eslik edecek bu kursa indirimle kayit olabilirsiniz: https://www.udemy.com/ios-11-swift-4-baslangictan-ileri-seviyeye-mobil-uygulama/?couponCode=EXISTING
+
+Etik Hacker Olma Kursu
+
+Türkiye'nin en çok talep gören online kurslarindan olan Etik Hacker Olma Kursu'nda hacker'larin yaptiklari saldirilari, mantiklarini, nasil yapildigini ögreneceksiniz. Ayni zamanda kendi sistemlerinizi bu saldirilara karsi güvenli hale getirmeyi inceleyeceksiniz. Tüm bunlari ögrenmek ve beyaz sapkali hacker olma yolunda ilk adimi atmak için kursa buradan kayit olabilirsiniz: https://www.udemy.com/etik-hacker-olma-kursu/?couponCode=EXISTING
+
+Etik Hacker Olma Kursu - Seviye 2: Ag Içi Saldirilar
+
+Bu kurs ile birlikte Etik Hacker Olma Kursu'nda ögrendiginiz bilgileri bir adim daha ileriye tasiyabilir, profesyonel bir bilisim uzmani olma yolunda bir adim daha atabilirsiniz. Ag Içi Saldirilar'a odaklanan bu kurs ile Python ile kendi ortadaki adam saldirilarinizi yazmaya kadar ilerleyeceginiz bir müfredatla karsi karsiya olacaksiniz. Kursu buradan inceleyip indirimle kayit olabilirsiniz: https://www.udemy.com/etik-hacker-olma-kursu-seviye-2-ag-ici-saldirilar/?couponCode=NEW-COURSE-SPECIAL
+
+Python: Sifirdan Ileri Seviyeye Etik Hacker Örnekleriyle
+
+En bastan programlamayi ve Python'u ögrenmek istiyorsaniz bu kursu kesinlikle almanizi tavsiye ederim. Sadece Python'i sifirdan en ince detaylarina kadar ögrenmekle kalmayacak ayni zamanda bu ögrendiklerinizi Etik Hacker programlari yazarak pratige dökebileceksiniz: https://www.udemy.com/python-sifirdan-ileri-seviyeye/?couponCode=NEW-LAUNCH-PROMO
+
+Blockchain ve Bitcoin Nedir?
+
+Bu kursta Blockchain ve Bitcoin'in ne oldugunu ve piyasalarda nasil islem yapilabilecegini ögreniyoruz. Buradan indirimle alabilirsiniz: https://www.udemy.com/blockchain-ve-bitcoin-nedir/?couponCode=EXISTING

@@ -1,0 +1,89 @@
+﻿@using OdevToplamaProjesi.Entities
+@model Odevler
+
+<div class="card">
+    <div class="card-block">
+       
+        <form class="form-horizontal p-t-20">
+            <div class="form-group row">
+                <label for="exampleInputuname3" class="col-sm-3 control-label">Ödev Başlığı*</label>
+                <div class="col-sm-9">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="ti-notepad"></i></div>
+                        <input type="text" class="form-control" id="odevbasligi" data-odev-id="@Model.ID" value="@Model.OdevBasligi" >
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="exampleInputEmail3" class="col-sm-3 control-label">Ödev Açıklaması*</label>
+                <div class="col-sm-9">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="ti-email"></i></div>
+                        <textarea class="form-control" rows="5" id="odevaciklamasi" >@Model.OdevAciklamasi</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="web" class="col-sm-3 control-label">Bitiş Tarihi</label>
+                <div class="col-sm-9">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="ti-world"></i></div>
+                        <input type="text" class="form-control" id="bitistarihi" value="@Model.BitisTarihi">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group row m-b-0">
+                <div class="offset-sm-3 col-sm-9">
+                    <button type="button" onclick="odevGuncelle()" class="btn btn-info waves-effect waves-light">Güncelle</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function odevGuncelle() {
+       
+        var odevID = $("#odevbasligi").data("odev-id");
+        var odevbasligi = $("#odevbasligi").val();
+        var odevaciklamasi = $('textarea#odevaciklamasi').val();
+        var bitistarihi = $("#bitistarihi").val();
+        swal({
+            title: "Eminmisiniz?",
+            text: "Ödev Güncellenecek!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Evet, Güncelle!",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                method: "GET",
+                url: "/Odev/OdevGuncelle/",
+                data: { 'id': odevID, 'odevbasligi': odevbasligi, 'odevaciklamasi': odevaciklamasi,'bitistarihi':bitistarihi }
+
+            }).done(function (jsnData) {
+                if (jsnData.result) {
+                    swal({
+                        title: "Başarılı!", text: "Ödev başarılı bir şekilde güncellendi. :)", type: "success",
+                        closeOnConfirm: false
+                    }, function () {
+                        location.reload();
+                    });
+
+                }
+                else {
+                    swal("Hata!", jsn.message, "warning");
+
+                }
+            }).fail(function (error) {
+                swal("Hata!", "Sunucuyla bağlantı kurulamadı.", "warning");
+
+
+            });
+            swal("Başarılı!", "Ders başarılı bir şekilde kaldırıldı.", "success");
+
+        });
+    }
+  
+</script>
